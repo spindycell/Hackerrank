@@ -1,71 +1,40 @@
 #include<bits/stdc++.h>
 using namespace std;
-int n,k,r,c,ans,row,col;
 
-int hitung(int n,int r,int c,int row,int col){
-    for(int i=1; i<=n; i++){
-        for(int j=1; j<=n; j++){
-            if(i==r) {
-                if(col < c){
-                    if(row==i && j<=col) ans-- ;
-                } else if(col > c){
-                    if(row == i && j>=col) ans-- ;
-                }
-            } else if(j==c){
-                if(row < r){
-                    if(row>=i && j==col) ans--;
-                } else if(row > r){
-                    if(row <= i && j==col) ans--;
-                }
-            }
-            else if(i==r-(c-j) && j==c-(c-j) ) {
-                if(row<r){
-                    if( (i<=row && j<=col) && (i==row-(col-j) && j==col-(col-j) )){
-                        ans--;
-                    }
-                } else if(row>r){
-                    if( (i>=row && j>=col) && (i==row-(col-j) && j==col-(col-j) ) ){
-                        ans--;
-                    }
-                }
-            } else if(i==r+(c-j) && j==c-(c-j)){
-                if(row<r){
-                    if( (i<=row && j>=col) && (i==row+(col-j) && j==col-(col-j) )){
-                        ans--;
-                    }
-                } else if(row>r){
-                    if( (i>=row && j<=col) && (i==row+(col-j) && j==col-(col-j) ) ){
-                        ans-- ;
-                    }
-                }
-            }
-        }
-    }
-    return ans;
+typedef pair < int, int > ii;
+
+int di[] = {-1, -1, -1, 0, 1, 1, 1, 0};
+int dj[] = {-1, 0, 1, 1, 1, 0, -1, -1};
+
+set < ii > obstacles;
+int n, k;
+int rQueen;
+int cQueen;
+long long answer;
+
+void dfs(int r, int c, int dir) {
+    if (r < 1 || r > n || c < 1 || c > n) return;
+    if (obstacles.find(ii(r, c)) != obstacles.end()) return;
+    answer ++;
+    if (r == rQueen && c == cQueen) answer --;
+    dfs(r+di[dir], c+dj[dir], dir);
 }
 
 int main(){
     cin >> n >> k;
-    cin >> r >> c;
-    for(int i=1; i<=n; i++){
-        for(int j=1; j<=n; j++){
-            if(i==r && j==c){
-              continue;
-            } else if(i==r) {
-                ans++;
-            } else if(j==c){
-                ans++;
-            }
-            else if(i==r-(c-j) && j==c-(c-j) ) {
-                ans++;
-            } else if(i==r+(c-j) && j==c-(c-j)){
-                ans++;
-            }
-        }
+    cin >> rQueen >> cQueen;
+    for(int a0 = 0; a0 < k; a0++){
+        int rObstacle;
+        int cObstacle;
+        cin >> rObstacle >> cObstacle;
+        obstacles.insert(ii(rObstacle, cObstacle));
     }
-    for(int i=1; i<=k; i++){
-        cin >> row >> col;
-        hitung(n,r,c,row,col);
+
+    for (int i=0; i<8; i++) {
+        dfs(rQueen, cQueen, i);
     }
-    cout << ans << endl;
+
+    cout << answer << endl;
+
+    return 0;
 }
