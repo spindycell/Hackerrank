@@ -2,10 +2,7 @@
 using namespace std;
 
 int main(){
-    string num="1001001";
-    int pos = 1;
-    while(pos<num.length()/2){
-        pos++;
-    }
-    cout << pos;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout << " 234324324" <<endl;
 }
