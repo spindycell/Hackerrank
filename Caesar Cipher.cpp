@@ -2,26 +2,26 @@
 using namespace std;
 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
     int n,x;
-    string s;
-
     cin >> n;
+    string s,ans="";
     cin >> s;
     cin >> x;
-    while(x>26){
-        x-=26;
-    }
-    for(int i=0; i<n; i++){
-        int temp=0;
-        if(isalpha(s[i])){
-            temp = (int)s[i];
-            temp += x;
-            if(!isalpha((char)temp)) temp-=26;
 
-            s[i] = (char)temp;
-        }
+    for(int i=0; i<n; i++){
+        if(s[i]>='a' && s[i]<='z'){
+            int temp = (int)s[i]+x;
+            while(temp >122){
+                temp-=26;
+            }
+            ans += (char)temp;
+        } else if(s[i]>='A' && s[i]<='Z'){
+            int temp = (int)s[i]+x;
+            while(temp >90){
+                temp-=26;
+            }
+            ans += (char)temp;
+        } else ans+=s[i];
     }
-    cout << s <<endl;
+    cout << ans << endl;
 }

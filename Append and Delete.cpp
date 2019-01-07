@@ -12,14 +12,8 @@ int main(){
         if(s1[i]==s2[i])n++;
         else break;
     }
-    ans = (p1-n)+(p2-n);
-    //cout << ans <<endl;
-    if(p1<p2){
-        ans = p1+p2;
-        if(ans<=k)cout << "YES" <<endl;
-        else cout << "No" <<endl;
-    } else {
-        if(ans<=k)cout << "Yes" <<endl;
-        else cout << "No" <<endl;
-    }
+    if(p1+p2-2*n > k) cout << "No" << '\n';
+    else if((p1+p2-2*n)%2==k%2) cout << "Yes" << '\n';
+    else if(p1+p2-k < 0) cout << "Yes" << '\n';
+    else cout << "No" << '\n';
 }
